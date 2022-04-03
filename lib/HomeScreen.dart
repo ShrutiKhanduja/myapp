@@ -16,8 +16,19 @@ class _HomeScreenState extends State<HomeScreen> {
       body:SingleChildScrollView(
         child: Stack(
           children: [
+
             Image.asset('assets/back.png',fit: BoxFit.cover,width:MediaQuery.of(context).size.width),
-            Text('SEARCH YOUR RESEARCH',style:GoogleFonts.coda(color:Color.fromRGBO(0,33, 72, 1),fontSize:MediaQuery.of(context).size.height*0.1)),
+            Align(
+              alignment:Alignment.bottomRight,
+                child: Image.asset('assets/s1.png',height: MediaQuery.of(context).size.height*0.5,)),
+            Column(
+              children:[
+                SizedBox(height:MediaQuery.of(context).size.height*0.1,),
+                Center(child: Text('SEARCH YOUR RESEARCH',style:GoogleFonts.coda(color:Color.fromRGBO(0,33, 72, 1),fontSize:MediaQuery.of(context).size.height*0.08))),
+              ]
+
+
+            ),
 
           ],
         ),
