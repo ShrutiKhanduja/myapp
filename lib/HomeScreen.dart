@@ -13,11 +13,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body:Column(
-        children: [
-          Text('SEARCH YOUR RESEARCH',style:GoogleFonts.coda(color:Color.fromRGBO(0,33, 72, 1),fontSize:MediaQuery.of(context).size.height*0.1)),
+      body:SingleChildScrollView(
+        child: Stack(
+          children: [
+            Image.asset('assets/back.png',fit: BoxFit.cover,width:MediaQuery.of(context).size.width),
+            Text('SEARCH YOUR RESEARCH',style:GoogleFonts.coda(color:Color.fromRGBO(0,33, 72, 1),fontSize:MediaQuery.of(context).size.height*0.1)),
 
-        ],
+          ],
+        ),
       )
     );
   }
