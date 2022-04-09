@@ -100,5 +100,26 @@
       loadMainDartJs();
     }
   </script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+  <script>
+
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyDWxf5bvF_rPHmGVFW2JDP1wI3lJnmSA58",
+    authDomain: "research-a7e88.firebaseapp.com",
+    projectId: "research-a7e88",
+    storageBucket: "research-a7e88.appspot.com",
+    messagingSenderId: "713376671130",
+    appId: "1:713376671130:web:42499ecb8eaab38b36c623",
+    measurementId: "G-ERTXVBZYYP"
+  };
+
+  // Initialize Firebase
+   firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 </body>
 </html>

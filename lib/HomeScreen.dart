@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:footer/footer.dart';
+import 'package:footer/footer_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'Search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String text;
@@ -12,170 +17,193 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+      // addDishParams();
+     super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body:SingleChildScrollView(
-        child: Stack(
-          children: [
-
-            Image.asset('assets/back.png',fit: BoxFit.cover,width:MediaQuery.of(context).size.width),
-            Align(
-                alignment:Alignment.bottomLeft,
-
-                child: Column(
-                  children:  [
-                    SizedBox(height:MediaQuery.of(context).size.height*0.45 ),
-                    Image.asset('assets/Rectangle 10.png',height: MediaQuery.of(context).size.height*0.5,),
-                  ],
-                )),
-            Align(
-                alignment:Alignment.bottomLeft,
-
-                child: Column(
-                  children:  [
-                    SizedBox(height:MediaQuery.of(context).size.height*0.55 ),
-                    Image.asset('assets/Rectangle 4.png',height: MediaQuery.of(context).size.height*0.5,),
-                  ],
-                )),
-            Align(
-                alignment:Alignment.bottomRight,
-
-                child: Image.asset('assets/s2.png',height: MediaQuery.of(context).size.height*0.7,)),
-            Align(
-              alignment:Alignment.bottomRight,
-
-                child: Image.asset('assets/s1.png',height: MediaQuery.of(context).size.height*0.8,)),
-            Column(
-              children:[
-                SizedBox(height:MediaQuery.of(context).size.height*0.1,),
-                Center(child: Text('SEARCH YOUR RESEARCH',style:GoogleFonts.coda(color:Color.fromRGBO(0,33, 72, 1),fontSize:MediaQuery.of(context).size.height*0.08))),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
-          child: Container(
-            height: 70,
-            margin: const EdgeInsets.fromLTRB(30, 30, 30, 30),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Colors.white,
-              border: Border.all(color: Colors.black26),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextField(
-
-              style: TextStyle(fontSize: 25),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 20),
-                icon: Icon(Icons.search, color: Colors.black),
-                suffixIcon: widget.text.isNotEmpty
-                    ? GestureDetector(
-                  child: Icon(Icons.close,color: Colors.black54),
-                  onTap: () {
+      body:FooterView(
+        footer: Footer(
+          child:Align(
+            alignment: Alignment.bottomCenter,
+            child:  Stack(
+                children: [
+                  Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    color: HexColor("#B0C4DE"),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
 
 
-                    FocusScope.of(context).requestFocus(FocusNode());
-                  },
-                )
-                    : null,
-                hintText: "Search or Type a Url",
+                      Align(
 
-                border: InputBorder.none,
-              ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 50),
+                          child: InkWell(
+
+                            child: Text(
+                              'GET IN TOUCH \n Mrie Campus \n Sector-43, Aravalli Hills,Delhi- \n Surajkhund Road Faridabad-121004,\n (Haryana),India',
+                              style: GoogleFonts.sourceSansPro(
+                                  fontSize:  MediaQuery.of(context).size.height*0.0175,
+                                  letterSpacing: 1.6),
+                            ),
+                            onTap: () {},
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:50.0),
+                          child: InkWell(
+                            child: Text(
+                              'GENERAL ENQUIRY \n MRIIRS:+91-129-4198000,4198100 \n Fax +91-129-4198211 \n Email: admissions@manavrachna.edu.net',
+                              style: GoogleFonts.sourceSansPro(
+                                  fontSize:  MediaQuery.of(context).size.height*0.0175,
+                                  letterSpacing: 1.6),
+                            ),
+                            onTap: () {
+
+                            },
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:50.0),
+                          child: InkWell(
+                            child: Text(
+                              'CITY OFFICES \n Chandigrah|Delhi|Guwahati| \n Indore| Kota| Lucknow|Varanasi|\n Patna|Hyderabad\n c Manav Rachna Vidyantariksha.All \n Right Reserved',
+                              style: GoogleFonts.sourceSansPro(
+                                  fontSize:  MediaQuery.of(context).size.height*0.0175,
+                                  letterSpacing: 1.6),
+                            ),
+                            onTap: () {
+
+                            },
+                          ),
+                        ),
+                      ),
+                    ],),
+                ]
 
 
             ),
           ),
         ),
-                SizedBox(height:MediaQuery.of(context).size.height*0.1,),
-                Center(child: Text('Amet minim  molit non deserunt ullomco \n est sit aliqua dolor do amet sint. Velit officia \n consequat duis enim velit molit.',style:GoogleFonts.questrial(color:Color.fromRGBO(0,33, 72, 1),fontSize:MediaQuery.of(context).size.height*0.04))),
-                SizedBox(height:MediaQuery.of(context).size.height*0.1,),
-        Image.asset('assets/mr.png'
-        ),
-                SizedBox(height:MediaQuery.of(context).size.height*0.1 ),
-                Center(child: Text('An initiative by Manav Rachna International institiute of reseach and Studies', style: GoogleFonts.sourceSansPro(
-                    fontSize:  MediaQuery.of(context).size.height*0.05,
-                    letterSpacing: 1.6),)),
+        children: [
+          Stack(
+              children: [
 
-                SizedBox(height:MediaQuery.of(context).size.height*0.1 ),
-                Stack(
-                  children: [
-                    Container(
-                      height: 200,
-                      color: HexColor("#B0C4DE"),
+                Image.asset('assets/back.png',fit: BoxFit.cover,width:MediaQuery.of(context).size.width),
+                Align(
+                    alignment:Alignment.bottomLeft,
+
+                    child: Column(
+                      children:  [
+                        SizedBox(height:MediaQuery.of(context).size.height*0.45 ),
+                        Image.asset('assets/Rectangle 10.png',height: MediaQuery.of(context).size.height*0.5,fit: BoxFit.cover),
+                      ],
+                    )),
+                Align(
+                    alignment:Alignment.bottomLeft,
+
+                    child: Column(
+                      children:  [
+                        SizedBox(height:MediaQuery.of(context).size.height*0.55 ),
+                        Image.asset('assets/Rectangle 4.png',height: MediaQuery.of(context).size.height*0.5,fit: BoxFit.cover),
+                      ],
+                    )),
+                Align(
+                    alignment:Alignment.bottomRight,
+
+                    child: Image.asset('assets/s2.png',height: MediaQuery.of(context).size.height*0.7,)),
+                Align(
+                    alignment:Alignment.bottomRight,
+
+                    child: Image.asset('assets/s1.png',height: MediaQuery.of(context).size.height*0.8,)),
+                Column(
+                  children:[
+                    SizedBox(height:MediaQuery.of(context).size.height*0.1,),
+                    Center(child: Text('SEARCH YOUR RESEARCH',style:GoogleFonts.coda(color:Color.fromRGBO(0,33, 72, 1),fontSize:MediaQuery.of(context).size.height*0.08))),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 100),
+                      child: Container(
+                        height: 70,
+                        margin: const EdgeInsets.fromLTRB(30, 30, 30, 30),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black26),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(context,MaterialPageRoute(builder:(context)=>Search()));
+                          },
+                          child: Container(
+                            height:MediaQuery.of(context).size.height*0.05,
+                            width:MediaQuery.of(context).size.width*0.7,
+
+                            decoration:BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10),),color: Colors.white),
+                            child:Center(child: Text('Search here',style: GoogleFonts.questrial(color:Colors.grey,fontSize: MediaQuery.of(context).size.height*0.02),))
+
+                          ),
+                        ),
+                      ),
                     ),
-                    Row(children: [
+                    SizedBox(height:MediaQuery.of(context).size.height*0.1,),
+                    Center(child: Text('Amet minim  molit non deserunt ullomco \n est sit aliqua dolor do amet sint. Velit officia \n consequat duis enim velit molit.',style:GoogleFonts.questrial(color:Color.fromRGBO(0,33, 72, 1),fontSize:MediaQuery.of(context).size.height*0.04))),
+                    SizedBox(height:MediaQuery.of(context).size.height*0.5,),
+                    Image.asset('assets/mr.png',fit: BoxFit.fitWidth,width: MediaQuery.of(context).size.width,
+                    ),
+                    SizedBox(height:MediaQuery.of(context).size.height*0.1 ),
+                    Center(child: Text('An initiative by Manav Rachna International Institute of Research and Studies', style: GoogleFonts.sourceSansPro(
+                        fontSize:  MediaQuery.of(context).size.height*0.05,
+                        letterSpacing: 1.6),)),
 
 
-                      Expanded(
-
-                        flex: 1,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 50),
-                            child: InkWell(
-
-                              child: Text(
-                                'GET IN TOUCH \n Mrie Campus \n Sector-43, Aravalli Hills,Delhi- \n Surajkhund Road Faridabad-121004,\n (Haryana),India',
-                                style: GoogleFonts.sourceSansPro(
-                                    fontSize:  MediaQuery.of(context).size.height*0.0175,
-                                    letterSpacing: 1.6),
-                              ),
-                              onTap: () {},
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(flex: 1,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top:50.0),
-                            child: InkWell(
-                              child: Text(
-                                'GENERAL ENQUIRY \n MRIIRS:+91-129-4198000,4198100 \n Fax +91-129-4198211 \n Email: admissions@manavrachna.edu.net',
-                                style: GoogleFonts.sourceSansPro(
-                                    fontSize:  MediaQuery.of(context).size.height*0.0175,
-                                    letterSpacing: 1.6),
-                              ),
-                              onTap: () {
-
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(flex: 1,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top:50.0),
-                            child: InkWell(
-                              child: Text(
-                                'CITY OFFICES \n Chandigrah|Delhi|Guwahati| \n Indore| Kota| Lucknow|Varanasi|\n Patna|Hyderabad\n c Manav Rachna Vidyantariksha.All \n Right Reserved',
-                                 style: GoogleFonts.sourceSansPro(
-fontSize:  MediaQuery.of(context).size.height*0.0175,
-                                    letterSpacing: 1.6),
-                              ),
-                              onTap: () {
-
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],),
-              ]
 
 
-            ),
+                  ],
+                ),
+              ]),
+        ],
 
-          ],
-        ),
-  ]),
       )
     );
+  }
+  addDishParams() {
+    FirebaseFirestore.instance.collection('data').get().then((value) {
+      value.docs.forEach((element) {
+        FirebaseFirestore.instance
+            .collection('data')
+            .doc(element.id)
+            .update({
+          'nameSearch': setSearchParam(element['Domain_name']),
+
+        });
+      });
+    });
+
+  }
+
+  setSearchParam(String caseString) {
+    List<String> caseSearchList = <String>[];
+    String temp = "";
+    for (int i = 0; i < caseString.length; i++) {
+      temp = temp + caseString[i];
+      caseSearchList.add(temp);
+    }
+    return caseSearchList;
   }
 }
