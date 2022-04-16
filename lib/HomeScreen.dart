@@ -4,6 +4,7 @@ import 'package:footer/footer_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myapp/search_cards.dart';
 
 import 'Search_screen.dart';
 
@@ -55,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontSize:  MediaQuery.of(context).size.height*0.0175,
                                   letterSpacing: 1.6),
                             ),
-                            onTap: () {},
+                            onTap: () {
+
+                            },
                           ),
                         ),
                       ),

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:myapp/research.dart';
+import 'package:myapp/search_cards.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -124,64 +126,13 @@ class _SearchState extends State<Search> {
     itemBuilder: (BuildContext, index) {
     var item = dogList[index];
     return InkWell(
-    onTap: () async {
-      
+    onTap: ()  {
+launch(item.paper_link);
 
     },
     child: Padding(
     padding: const EdgeInsets.all(8.0),
-    child: Container(
-    width: MediaQuery.of(context).size.width * 0.8,
-    child: Row(
-    children: <Widget>[
-    // Container(
-    //   height: 50,
-    //   width: 50,
-    //   decoration: BoxDecoration(
-    //     borderRadius: BorderRadius.all(
-    //       Radius.circular(25),
-    //     ),
-    //   ),
-    //   child: ClipRRect(
-    //     borderRadius: BorderRadius.circular(25.0),
-    //     child: CachedNetworkImage(
-    //       height: 50,
-    //       width: 50,
-    //       imageUrl: item.url,
-    //       imageBuilder: (context, imageProvider) =>
-    //           Container(
-    //         decoration: BoxDecoration(
-    //           image: DecorationImage(
-    //               image: imageProvider,
-    //               fit: BoxFit.fill),
-    //         ),
-    //       ),
-    //       placeholder: (context, url) => GFLoader(
-    //         type: GFLoaderType.ios,
-    //       ),
-    //       errorWidget: (context, url, error) =>
-    //           Icon(Icons.error),
-    //     ),
-    //   ),
-    // ),
-    Expanded(
-    child: Padding(
-    padding: const EdgeInsets.symmetric(
-    horizontal: 20),
-    child: Container(
-    child: Text(
-    '${item.domain_name} in ${item.title}',
-    ),
-    ),
-    ),
-    ),
-    Icon(
-    Icons.call_made_sharp,
-    color: Colors.black,
-    ),
-    ],
-    ),
-    ),
+    child: Search_cards(doi: item.doi,emp_id: item.emp_id,emp_name: item.emp_name,title: item.title,paper_link: item.paper_link,),
     ),
     );
     },

@@ -3,6 +3,9 @@ import 'package:footer/footer.dart';
 import 'package:footer/footer_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:myapp/search_cards.dart';
+
+import 'Search_screen.dart';
 
 class SearchResults extends StatefulWidget {
   const SearchResults({Key? key}) : super(key: key);
@@ -44,7 +47,9 @@ class _SearchResultsState extends State<SearchResults> {
                                     fontSize:  MediaQuery.of(context).size.height*0.0175,
                                     letterSpacing: 1.6),
                               ),
-                              onTap: () {},
+                              onTap: () {
+
+                              },
                             ),
                           ),
                         ),
@@ -172,4 +177,4 @@ class _SearchResultsState extends State<SearchResults> {
     );
   }
   }
-}
+
