@@ -5,8 +5,8 @@ import 'package:myapp/research.dart';
 
 import 'Search_screen.dart';
 class Search_cards extends StatefulWidget {
- String doi,title,paper_link,emp_id,emp_name;
-Search_cards({required this.doi,required this.title,required this.paper_link,required this.emp_id,required this.emp_name});
+ String doi,title,paper_link,author;
+Search_cards({required this.doi,required this.title,required this.paper_link,required this.author});
   @override
  
   State<Search_cards> createState() => _Search_cardsState();
@@ -51,7 +51,7 @@ SizeConfig().init(context);
                 Row(
                   children: [
                     Text('AUTHOR_NAME : ',style:GoogleFonts.signika(color:Color.fromRGBO(4, 22, 48, 0.7),fontSize: SizeConfig.deviceHeight*0.02,fontWeight: FontWeight.bold),),
-                    Text(widget.emp_name,style:GoogleFonts.signika(color:Colors.grey,fontSize: SizeConfig.deviceHeight*0.02),),
+                    Text(widget.author,style:GoogleFonts.signika(color:Colors.grey,fontSize: SizeConfig.deviceHeight*0.02),),
 
                   ],
                 ),

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:myapp/research.dart';
 import 'package:myapp/search_cards.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -57,8 +57,8 @@ class _SearchState extends State<Search> {
       Research(
           doi:f['DOI'],
           domain_name: f['Domain_name'],
-          emp_id: f['Emp_id'],
-          emp_name: f['Emp_name'],
+
+          author: f['Author'],
           paper_link: f['Paper_link'],
           title: f['title'],
           keywords: f['keywords']
@@ -112,35 +112,35 @@ class _SearchState extends State<Search> {
       ),
     ),
     body: SingleChildScrollView(
-    child: Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: <Widget>[
-    Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-    height: MediaQuery.of(context).size.height * 0.75,
-    child: ListView.builder(
-    shrinkWrap: true,
-    scrollDirection: Axis.vertical,
-    itemCount: dogList.length,
-    itemBuilder: (BuildContext, index) {
-    var item = dogList[index];
-    return InkWell(
-    onTap: ()  {
-launch(item.paper_link);
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.75,
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: dogList.length,
+                itemBuilder: (BuildContext, index) {
+                  var item = dogList[index];
+                  return InkWell(
+                    onTap: ()  {
+                      launch(item.paper_link);
 
-    },
-    child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Search_cards(doi: item.doi,emp_id: item.emp_id,emp_name: item.emp_name,title: item.title,paper_link: item.paper_link,),
-    ),
-    );
-    },
-    ),
-    ),
-    ),
-    ],
-    ),
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Search_cards(doi: item.doi,author: item.author,title: item.title,paper_link: item.paper_link,),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     ),
     );
   }
@@ -166,6 +166,7 @@ launch(item.paper_link);
       dogList.clear();
       snapshot.docs.forEach((f) {
         var name = f['Domain_name'].toString().toLowerCase();
+        List array=f['keywords'];
 
 
         List<String> dogName = List<String>.from(f['nameSearch']);
@@ -178,7 +179,7 @@ launch(item.paper_link);
           dogLowerCase.add(dog.toLowerCase());
         }
 
-        if (dogLowerCase.contains(query.toLowerCase()) ||
+        if (dogLowerCase.contains(query.toLowerCase()) || array.toString().trim().contains(query)||
             breedLowerCase.contains(query.toLowerCase())|| name.toLowerCase().toString().contains(query.toLowerCase())){
 
 
@@ -188,8 +189,8 @@ launch(item.paper_link);
           dogList.add(  Research(
               doi:f['DOI'],
               domain_name: f['Domain_name'],
-              emp_id: f['Emp_id'],
-              emp_name: f['Emp_name'],
+
+              author: f['Author'],
               paper_link: f['Paper_link'],
               title: f['title'],
               keywords: f['keywords']
@@ -213,8 +214,8 @@ launch(item.paper_link);
         dogList.add(  Research(
             doi:f['DOI'],
             domain_name: f['Domain_name'],
-            emp_id: f['Emp_id'],
-            emp_name: f['Emp_name'],
+
+            author: f['Author'],
             paper_link: f['Paper_link'],
             title: f['title'],
             keywords: f['keywords']
