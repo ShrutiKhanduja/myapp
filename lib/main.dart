@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/HomeScreen.dart';
+import 'package:myapp/login.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized(
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           }
           if(snapshot.connectionState==ConnectionState.done){
             print("Done");
-            return HomeScreen(text:'');
+            return LoginScreen();
           }
           return CircularProgressIndicator();
         },
