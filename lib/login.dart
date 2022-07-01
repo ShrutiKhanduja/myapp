@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late SharedPreferences prefs;
   void pref()async {
     prefs= await SharedPreferences.getInstance();
+
   }
 
   // for password text field controller
@@ -29,10 +31,21 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isHiddenPassword = true;
   late FocusNode _myFocusNodeEmail;
   late FocusNode _myFocusNodePassword;
+  void checkUser(){
+    FirebaseFirestore.instance.collection('Users').where('email',isEqualTo: _emailcontroller.text).get().then((value) {
+      if(value.docs.length!=0){
+        prefs.setString('Admin', 'true');
+      }
+      else {
+        prefs.setString('Admin','false');
+      }
+    });
+  }
   @override
   void initState() {
     super.initState();
     pref();
+
 
     _myFocusNodeEmail = FocusNode();
     _myFocusNodeEmail.addListener(() {
@@ -165,7 +178,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     InkWell(
                       onTap:(){
                         setState(() {
-                          prefs.setString('name', _emailcontroller.text);
+                          prefs.setString('isLogged', 'true');
+                          checkUser();
                         });
                         Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=>HomeScreen()));
 
@@ -181,31 +195,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(height:SizeConfig.deviceHeight*0.04),
-                    InkWell(
-                      onTap:(){
-                        setState(() {
-
-                        });
-
-
-                      },
-
-                      child: Container(
-                        height: SizeConfig.deviceHeight*0.06,
-                        width:SizeConfig.deviceWidth*0.95,
-                        decoration: BoxDecoration(
-                            color:Colors.grey,
-                            borderRadius: BorderRadius.all((Radius.circular(10)))
-                        ),
-                        child: ElevatedButton.icon(onPressed: (){}, icon: FaIcon(FontAwesomeIcons.google,color: Colors.red), label: Text("LOGIN WITH GOOGLE ",style:GoogleFonts.montserrat(color:Colors.white,fontSize:SizeConfig.deviceHeight*0.02,fontWeight: FontWeight.bold)),
-                          style: ElevatedButton.styleFrom(
-                              primary: HexColor("#d3d3d3"),
-                              onPrimary: Colors.white,
-                              minimumSize: Size(double.infinity,SizeConfig.deviceHeight*0.06)
-                          ),
-                        ),
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap:(){
+                    //     setState(() {
+                    //
+                    //     });
+                    //
+                    //
+                    //   },
+                    //
+                    //   child: Container(
+                    //     height: SizeConfig.deviceHeight*0.06,
+                    //     width:SizeConfig.deviceWidth*0.95,
+                    //     decoration: BoxDecoration(
+                    //         color:Colors.grey,
+                    //         borderRadius: BorderRadius.all((Radius.circular(10)))
+                    //     ),
+                    //     child: ElevatedButton.icon(onPressed: (){}, icon: FaIcon(FontAwesomeIcons.google,color: Colors.red), label: Text("LOGIN WITH GOOGLE ",style:GoogleFonts.montserrat(color:Colors.white,fontSize:SizeConfig.deviceHeight*0.02,fontWeight: FontWeight.bold)),
+                    //       style: ElevatedButton.styleFrom(
+                    //           primary: HexColor("#d3d3d3"),
+                    //           onPrimary: Colors.white,
+                    //           minimumSize: Size(double.infinity,SizeConfig.deviceHeight*0.06)
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
 
                   ]
               ),

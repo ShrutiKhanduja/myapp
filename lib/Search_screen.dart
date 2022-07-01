@@ -1,9 +1,17 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hexcolor/hexcolor.dart';
+
 import 'package:myapp/research.dart';
 import 'package:myapp/search_cards.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'constants.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -19,6 +27,13 @@ class _SearchState extends State<Search> {
 
   List<DocumentSnapshot> docList = [];
   List<Research> dogList = [];
+   SharedPreferences? prefs=null;
+  void pref()async {
+    prefs= await SharedPreferences.getInstance();
+
+  }
+
+
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -35,9 +50,37 @@ class _SearchState extends State<Search> {
 
   @override
   void initState() {
+    pref();
+
+
+
+
   getData();
 
   getData1();
+  }
+  List<List<dynamic>> rows = [];
+  downloadData() {
+    rows.clear();
+    List titles=['author','domain','paperLink','title','doi'];
+    rows.add(titles);
+    for (int i = 0; i < dogList.length; i++) {
+
+      List<dynamic> row = [];
+
+      row.add(dogList[i].author);
+      row.add(dogList[i].domain_name);
+      row.add(dogList[i].paper_link);
+      row.add(dogList[i].title);
+      row.add(dogList[i].doi);
+      rows.add(row);
+
+    }
+
+    String csv = const ListToCsvConverter().convert(rows);
+    new AnchorElement(href: "data:text/plain;charset=utf-8,$csv")
+      ..setAttribute("download", "data.csv")
+      ..click();
   }
 
   void getData1() async {
@@ -80,6 +123,7 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
        appBar: AppBar(
          backgroundColor: Colors.white,
@@ -118,7 +162,7 @@ class _SearchState extends State<Search> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.75,
+              height: MediaQuery.of(context).size.height * 0.85,
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
@@ -138,7 +182,26 @@ class _SearchState extends State<Search> {
                 },
               ),
             ),
+
           ),
+          (prefs?.getString('Admin')=='true')?InkWell(
+            onTap:(){
+              setState(() {
+              downloadData();
+              });
+
+
+            },
+            child: Container(
+                height: SizeConfig.deviceHeight*0.06,
+                width:SizeConfig.deviceWidth*0.95,
+                decoration: BoxDecoration(
+                    color:HexColor("#227BBC"),
+                    borderRadius: BorderRadius.all((Radius.circular(10)))
+                ),
+                child:Center(child: Text('Export data',style:GoogleFonts.montserrat(color:Colors.white,fontSize:SizeConfig.deviceHeight*0.02,fontWeight: FontWeight.bold)))
+            ),
+          ):Container(),
         ],
       ),
     ),
