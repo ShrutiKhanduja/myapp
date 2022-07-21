@@ -88,7 +88,7 @@ class _SearchState extends State<Search> {
   dogList1.clear();
   print('started loading');
   await FirebaseFirestore.instance
-      .collection("data")
+      .collection("testData")
       .get()
       .then((QuerySnapshot snapshot) {
   snapshot.docs.forEach((f) async {
@@ -222,7 +222,7 @@ class _SearchState extends State<Search> {
     }
 
     await FirebaseFirestore.instance
-        .collection('data')
+        .collection('testData')
         .get()
         .then((QuerySnapshot snapshot) {
       docList.clear();
@@ -237,6 +237,8 @@ class _SearchState extends State<Search> {
         List<String> dogLowerCase = [];
         List<String> breedLowerCase = [];
         print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+        print(array);
+        print(array.contains(query));
 
         for (var dog in dogName) {
           dogLowerCase.add(dog.toLowerCase());
@@ -259,6 +261,7 @@ class _SearchState extends State<Search> {
               keywords: f['keywords']
           ));
           setState(() {
+            print(dogList.length);
             print('Updated');
           });
         }
@@ -269,7 +272,7 @@ class _SearchState extends State<Search> {
 
   void getData() async {
     await FirebaseFirestore.instance
-        .collection("data")
+        .collection("testData")
         .get()
         .then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((f) {
